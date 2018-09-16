@@ -10,30 +10,21 @@ namespace Assignment1.Data
         public double x2;
         public double x;
         public double c;
-        public Variable divisor;
 
-        public Variable(double x2, double x, double c, Variable divisor)
+        public Variable(double x2, double x, double c)
         {
             this.x2 = x2;
             this.x = x;
             this.c = c;
-            this.divisor = divisor;
         }
 
         public Variable() : this(0, 0, 0) { }
-        public Variable(double x2, double x, double c) : this(x2, x, c, null) { }
         public Variable(Variable variable) : this(variable.x2, variable.x, variable.c) { }
-        public Variable(Variable variable, Variable divisor) : this(variable.x2, variable.x, variable.c, divisor) { }
 
         override
         public string ToString()
         {
-            if (divisor == null)
-            {
-                return $"{x2}X^2 + {x}X + {c}";
-            }
-
-            return $"({x2}X^2 + {x}X + {c}) / (" + divisor + ")";
+            return $"{x2}X^2 + {x}X + {c}";
         }
 
         public static Variable operator +(Variable a, Variable b)
@@ -75,22 +66,12 @@ namespace Assignment1.Data
                         {
                             return new Variable(0, 0, ratioX2);
                         }
-                        else
-                        {
-                            // Cannot be divided at the point.
-                            // Should move to the divisor part of the variable.
-                        }
                     }
                     else
                     {
                         if (a.c == 0 && ratioX2 == ratioX)
                         {
                             return new Variable(0, 0, ratioX2);
-                        }
-                        else
-                        {
-                            // Cannot be divided at the point.
-                            // Should move to the divisor part of the variable.
                         }
                     }
                 }
@@ -100,22 +81,12 @@ namespace Assignment1.Data
                     {
                         return new Variable(0, 0, ratioX2);
                     }
-                    else
-                    {
-                        // Cannot be divided at the point.
-                        // Should move to the divisor part of the variable.
-                    }
                 }
                 else
                 {
                     if (a.x == 0 && a.c == 0)
                     {
                         return new Variable(0, 0, ratioX2);
-                    }
-                    else
-                    {
-                        // Cannot be divided at the point.
-                        // Should move to the divisor part of the variable.
                     }
                 }
             }
@@ -127,11 +98,6 @@ namespace Assignment1.Data
                     {
                         return new Variable(0, 0, ratioX);
                     }
-                    else
-                    {
-                        // Cannot be divided at the point.
-                        // Should move to the divisor part of the variable.
-                    }
                 }
                 else
                 {
@@ -142,11 +108,6 @@ namespace Assignment1.Data
                     else if (a.x2 != 0 && a.c == 0)
                     {
                         return new Variable(0, a.x2 / b.x, a.x / b.x);
-                    }
-                    else
-                    {
-                        // Cannot be divided at the point.
-                        // Should move to the divisor part of the variable.
                     }
                 }
             }

@@ -36,6 +36,7 @@ namespace Assignment1.Main
                 if (IsEquationValid())
                 {
                     TransformEquation();
+                    bool hasException = false;
                     try
                     {
                         CalculateEquation();
@@ -43,24 +44,34 @@ namespace Assignment1.Main
                     catch (OverflowException)
                     {
                         Console.WriteLine("Out of Integer Range");
+                        hasException = true;
                     }
                     catch (DivideByZeroException)
                     {
                         Console.WriteLine("Division by zero");
+                        hasException = true;
+                    }
+                    catch (DivisorCannotBeSolvedException)
+                    {
+                        Console.WriteLine("Divisor is a unknown variable and cannot be solved.");
+                        hasException = true;
                     }
 
-                    var results = GetEquationResult();
-                    if (results.Count == 2)
+                    if (!hasException)
                     {
-                        Console.WriteLine($"X = {results[0]}, {results[1]}");
-                    }
-                    else if (results.Count == 1)
-                    {
-                        Console.WriteLine($"X = {results[0]}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There are no real roots.");
+                        var results = GetEquationResult();
+                        if (results.Count == 2)
+                        {
+                            Console.WriteLine($"X = {results[0]}, {results[1]}");
+                        }
+                        else if (results.Count == 1)
+                        {
+                            Console.WriteLine($"X = {results[0]}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("There are no real roots.");
+                        }
                     }
                 }
                 else

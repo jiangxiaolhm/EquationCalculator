@@ -119,7 +119,8 @@ namespace Assignment1.Data
             {
                 throw new DivideByZeroException();
             }
-            return null;
+
+            throw new DivisorCannotBeSolvedException();
         }
 
         public static Variable operator +(Variable a)

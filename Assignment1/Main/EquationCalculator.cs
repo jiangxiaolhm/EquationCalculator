@@ -51,6 +51,11 @@ namespace Assignment1.Main
                         Console.WriteLine("Division by zero");
                         hasException = true;
                     }
+                    catch (PowerGreaterThanTwoException)
+                    {
+                        Console.WriteLine("The greatest power of the equation is greater than two.");
+                        hasException = true;
+                    }
                     catch (DivisorCannotBeSolvedException)
                     {
                         Console.WriteLine("Divisor is a unknown variable and cannot be solved.");

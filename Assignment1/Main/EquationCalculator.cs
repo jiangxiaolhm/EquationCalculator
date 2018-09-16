@@ -7,10 +7,13 @@ using System.Text.RegularExpressions;
 
 namespace Assignment1.Main
 {
+    /// <summary>
+    /// This is the major class to receive user input to calculate the roots of an equation.
+    /// The greatest power of acceptable equation is two. 
+    /// </summary>
     class EquationCalculator
     {
         private string _equation;
-
         private Stack<Variable> _variableStack;
         private Stack<Operator> _operatorStack;
 
@@ -45,6 +48,20 @@ namespace Assignment1.Main
                     {
                         Console.WriteLine("Division by zero");
                     }
+
+                    var results = GetEquationResult();
+                    if (results.Count == 2)
+                    {
+                        Console.WriteLine($"X = {results[0]}, {results[1]}");
+                    }
+                    else if (results.Count == 1)
+                    {
+                        Console.WriteLine($"X = {results[0]}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("There are no real roots.");
+                    }
                 }
                 else
                 {
@@ -74,6 +91,8 @@ namespace Assignment1.Main
             // This pattern is used to match an equation consisting of digits, unknowns, operators and parentheses.
             // var pattern = @"^[\+\-]*\(?[\+\-]*\d*(\d|(X(\^2)?))\)?([\+\-\*\/]?[\+\-]*\(?[\+\-]*\d*(\d|(X(\^2)?))\)?)*=[\+\-]*\(?[\+\-]*\d*(\d|(X(\^2)?))\)?([\+\-\*\/]?[\+\-]*\(?[\+\-]*\d*(\d|(X(\^2)?))\)?)*[\+\-]*$";
 
+            // There should be at least one X variable.
+            if (!Regex.Match(_equation, "X").Success) return false;
             // Eliminate combinations of a variable following an other variable immediately, such as XX, X^23X.
             var p1 = @"X(\^2)?(\d+|X)";
             if (Regex.Match(_equation, p1).Success) return false;
@@ -148,6 +167,9 @@ namespace Assignment1.Main
             }
         }
 
+        /// <summary>
+        /// Calculate the equation.
+        /// </summary>
         private void CalculateEquation()
         {
             _variableStack = new Stack<Variable>();
@@ -370,6 +392,41 @@ namespace Assignment1.Main
             }
 
             return nextVariable;
+        }
+
+        /// <summary>
+        /// Get roots from the last variable.
+        /// </summary>
+        /// <returns></returns>
+        private List<int> GetEquationResult()
+        {
+            List<int> results = new List<int>();
+            if (_variableStack.Count == 1)
+            {
+                var v = _variableStack.Pop();
+                if (v.x2 != 0)
+                {
+                    var delta = v.x * v.x - 4 * v.x2 * v.c;
+                    var x1 = (-v.x + Math.Sqrt(delta)) / (2 * v.x2);
+                    var x2 = (-v.x - Math.Sqrt(delta)) / (2 * v.x2);
+
+                    if (delta > 0)
+                    {
+                        results.Add(Convert.ToInt32(x1));
+                        results.Add(Convert.ToInt32(x2));
+                    }
+                    else if (delta == 0)
+                    {
+                        results.Add(Convert.ToInt32(x1));
+                    }
+                }
+                else if (v.x != 0)
+                {
+                    var x = -v.c / v.x;
+                    results.Add(Convert.ToInt32(x));
+                }
+            }
+            return results;
         }
     }
 }

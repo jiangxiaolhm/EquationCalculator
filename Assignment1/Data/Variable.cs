@@ -2,13 +2,15 @@
 
 namespace Assignment1.Data
 {
+    /// <summary>
+    /// Data model of a quadratic variable with quadratic part, linear part and constant part. 
+    /// </summary>
     class Variable
     {
         public double x2;
         public double x;
         public double c;
         public Variable divisor;
-
 
         public Variable(double x2, double x, double c, Variable divisor)
         {
@@ -150,15 +152,7 @@ namespace Assignment1.Data
             }
             else if (b.c != 0)
             {
-                if (a.x2 == 0 && a.x == 0)
-                {
-                    return new Variable(0, 0, ratioC);
-                }
-                else
-                {
-                    // Cannot be divided at the point.
-                    // Should move to the divisor part of the variable.
-                }
+                return new Variable(a.x2 / b.c, a.x / b.c, a.c / b.c);
             }
             else
             {

@@ -2,6 +2,9 @@
 
 namespace Assignment1.Data
 {
+    /// <summary>
+    /// Add priorities for the enum of Operators.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field)]
     class ArithmeticPriorityAttribute : Attribute
     {

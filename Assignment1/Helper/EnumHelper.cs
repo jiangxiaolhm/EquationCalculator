@@ -5,7 +5,7 @@ namespace Assignment1.Helper
     public static class EnumHelper
     {
         /// <summary>
-        /// Gets an attribute on an enum field value
+        /// Get an attribute on an enum field value
         /// </summary>
         /// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
         /// <param name="enumVal">The enum value</param>
